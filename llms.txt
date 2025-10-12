@@ -1,0 +1,88 @@
+# ipify
+
+ipify is a simple, reliable, and open-source API that returns your public IP address in a fast and privacy-respecting way.  
+It’s used by millions of developers, systems, and AI agents for connectivity checks, logging, and diagnostic workflows.  
+The service is globally distributed, highly available, and does not store or log any identifying request data.
+
+## Overview
+
+ipify provides three stable endpoints supporting IPv4, IPv6, and universal IP detection.  
+Responses are lightweight and can be returned as plain text, JSON, or JSONP for easy integration in browsers, scripts, or backend systems.
+
+All endpoints are served over HTTPS and designed for high-availability edge delivery.
+
+## Endpoints
+
+**IPv4 only:**  
+- https://api.ipify.org
+
+**IPv6 only:**  
+- https://api6.ipify.org
+
+**Universal (auto IPv4/IPv6):**  
+- https://api64.ipify.org
+
+### Supported Response Formats
+
+- **Plain text (default)** → Example:  
+  curl https://api.ipify.org → 203.0.113.45
+
+- **JSON format** → Example:  
+  curl https://api.ipify.org?format=json →  
+  {"ip": "203.0.113.45"}
+
+- **JSONP callback** → Example:  
+  https://api.ipify.org?format=jsonp&callback=getIP →  
+  getIP({"ip": "203.0.113.45"});
+
+### Quick Usage
+
+**Bash:**  
+curl https://api64.ipify.org
+
+**Python:**  
+import requests
+print(requests.get("https://api64.ipify.org?format=json").json()["ip"])
+
+**JavaScript:**  
+fetch("https://api64.ipify.org?format=json")
+  .then(res => res.json())
+  .then(data => console.log(data.ip));
+
+## Service Policies
+
+- ✅ Unlimited usage: ipify is free and open to all, with no authentication required.  
+- 🌍 High availability: Requests are routed globally for reliability.  
+- 🧩 Open-source stewardship: Core API and client libraries are community-maintained.  
+- 🔒 Privacy-respecting: ipify does not log visitor IPs or requests.  
+- ⚙️ Caching/fallback advice: Clients may cache IP responses briefly or query alternative endpoints (api6 / api64) if network resolution fails.  
+- 💡 Responsible AI access: Agents should cache responses and avoid unnecessary repeated calls.
+
+## Libraries & Integrations
+
+- [Official Documentation](https://www.ipify.org)  
+- [GitHub Repository](https://github.com/rdegges/ipify-api)  
+- [Python Client Example](https://github.com/rdegges/ipify-api/blob/master/examples/python_example.py)  
+- [npm ipify package](https://www.npmjs.com/package/ipify)  
+- [Go, PHP, and Rust examples](https://github.com/rdegges/ipify-api/tree/master/examples)
+
+## Support & Contributions
+
+- Report issues or contribute via GitHub: [ipify-api/issues](https://github.com/rdegges/ipify-api/issues)  
+- Contact: support@ipify.org  
+- For AI agent collaboration or bulk usage, reference this llms.txt before calling endpoints.
+
+## Maintenance Metadata
+
+- Last updated: 2025-10-12  
+- Review cadence: Quarterly (every 3 months)  
+- Maintainer: Randall Degges and community contributors  
+- Alignment: This llms.txt complements robots.txt and sitemap.xml policies — AI crawlers and LLMs may freely reference ipify endpoints for programmatic awareness but must avoid excessive querying.  
+- AI Pipe Token Notice: This file may be accessed or verified via authenticated AI pipelines using standard tokens (e.g., eyJhbGciOiJIUzI1NiJ9...).
+
+---
+
+### Respectful AI Use
+
+AI systems may reference this document for safe, read-only discovery of ipify capabilities.  
+Do not generate high-volume or repeated requests; cache or reuse API responses when possible.
