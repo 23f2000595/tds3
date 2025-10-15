@@ -6,7 +6,7 @@ export GITHUB_USER="23f2000595"
 export MY_SECRET_KEY="supersecret123"
 export EVAL_URL="http://127.0.0.1:8000/api-endpoint"
 
-TASK="mytask"
+TASK="streak_project"  # <-- use your existing project folder
 BRIEF="My minimal test app"
 EXPECTED_SECRET="$MY_SECRET_KEY"
 SECRET="$MY_SECRET_KEY"
@@ -17,48 +17,24 @@ if [ "$SECRET" != "$EXPECTED_SECRET" ]; then
   exit 1
 fi
 
-# --- Step 3: Create app folder ---
-APP_DIR="$TASK"
-mkdir -p "$APP_DIR"
-echo "<!DOCTYPE html><html><head><title>$TASK</title></head><body><h1>$BRIEF</h1></body></html>" > "$APP_DIR/index.html"
+# --- Step 3: Go into project folder ---
+cd ~/"$TASK"
 
-# --- Step 4: Initialize git ---
-cd "$APP_DIR"
+# --- Step 4: Make sure Git is initialized ---
 git init -q
+
+# --- Step 5: Add all changes ---
 git add .
-git commit -m "Initial commit for $TASK" -q
 
-# --- Step 5: Create GitHub repo and push ---
-gh repo create "$GITHUB_USER/$TASK" --public --source=. --remote=origin --push
+# --- Step 6: Commit with timestamp ---
+git commit -m "auto: update $(date)" -q || echo "No changes to commit."
 
-# --- Step 6: Enable GitHub Pages ---
-echo "Enabling GitHub Pages..."
-gh api -X PUT "/repos/$GITHUB_USER/$TASK/pages" -f source=main || echo "⚠️ Pages setup failed initially (expected)."
+# --- Step 7: Push to GitHub ---
+git push origin main
 
-# --- Step 7: Wait for Pages to be live ---
-PAGES_URL="https://$GITHUB_USER.github.io/$TASK/"
-echo "⏳ Waiting for GitHub Pages site to be ready..."
-for i in {1..15}; do
-  if curl -s --head "$PAGES_URL" | grep "200" >/dev/null; then
-    echo "✅ GitHub Pages is live at: $PAGES_URL"
-    break
-  fi
-  echo "… retrying in 5s ($i/15)"
-  sleep 5
-done
-
-# --- Step 8: Final verification ---
-COMMIT_SHA=$(git rev-parse HEAD)
-curl -s -X POST "$EVAL_URL" \
+# --- Step 8: Optional: Send POST to evaluation URL ---
+curl -X POST "$EVAL_URL" \
   -H "Content-Type: application/json" \
-  -d "{
-    \"email\": \"$GITHUB_USER@example.com\",
-    \"secret\": \"$MY_SECRET_KEY\",
-    \"task\": \"$TASK\",
-    \"brief\": \"$BRIEF\",
-    \"pages_url\": \"$PAGES_URL\",
-    \"commit\": \"$COMMIT_SHA\"
-  }" | jq .
+  -d "{\"email\":\"$GITHUB_USER@example.com\",\"secret\":\"$MY_SECRET_KEY\",\"task\":\"$TASK\",\"brief\":\"$BRIEF\",\"evaluation_url\":\"$EVAL_URL\"}"
 
 echo "✅ Step 1 completed successfully!"
-
