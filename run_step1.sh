@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-# Environment
+# --- Environment ---
 export GITHUB_USER="23f2000595"
 export MY_SECRET_KEY="supersecret123"
 export EVAL_URL="http://127.0.0.1:8000/api-endpoint"
@@ -11,34 +11,35 @@ BRIEF="My minimal test app"
 EXPECTED_SECRET="$MY_SECRET_KEY"
 SECRET="$MY_SECRET_KEY"
 
-# Secret check
+# --- Secret check ---
 if [ "$SECRET" != "$EXPECTED_SECRET" ]; then
   echo "Secret mismatch! Exiting."
   exit 1
 fi
 
-# Use current directory
+# --- Use current directory ---
 APP_DIR=$(pwd)
 echo "<!DOCTYPE html><html><head><title>$TASK</title></head><body><h1>$BRIEF</h1></body></html>" > "$APP_DIR/index.html"
 
-# Stage changes
+# --- Stage changes ---
 git add .
 
-# Commit if there are changes
+# --- Commit if there are changes ---
 if ! git diff-index --quiet HEAD --; then
     git commit -m "auto update $(date)"
 fi
 
-# Pull remote changes safely
+# --- Pull remote changes safely ---
 git pull origin main --rebase || echo "Remote already up-to-date"
 
-# Push local commits
+# --- Push local commits ---
 git push origin main || echo "Push failed, check remote URL"
 
-# Optional: send POST request
+# --- Optional: send POST request with secret ---
 if [ ! -z "$EVAL_URL" ]; then
   COMMIT_SHA=$(git rev-parse HEAD)
   curl -X POST "$EVAL_URL" \
     -H "Content-Type: application/json" \
-    -d "{\"task\": \"$TASK\", \"brief\": \"$BRIEF\", \"commit\": \"$COMMIT_SHA\"}" || echo "POST failed"
+    -d "{\"task\": \"$TASK\", \"brief\": \"$BRIEF\", \"commit\": \"$COMMIT_SHA\", \"secret\": \"$MY_SECRET_KEY\"}" \
+    || echo "POST failed"
 fi

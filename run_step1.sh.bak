@@ -21,13 +21,21 @@ fi
 APP_DIR=$(pwd)
 echo "<!DOCTYPE html><html><head><title>$TASK</title></head><body><h1>$BRIEF</h1></body></html>" > "$APP_DIR/index.html"
 
-# Git: pull remote changes, add, commit, push
-git pull origin main --rebase
+# Stage changes
 git add .
-git commit -m "auto update $(date)" || echo "Nothing to commit"
+
+# Commit if there are changes
+if ! git diff-index --quiet HEAD --; then
+    git commit -m "auto update $(date)"
+fi
+
+# Pull remote changes safely
+git pull origin main --rebase || echo "Remote already up-to-date"
+
+# Push local commits
 git push origin main || echo "Push failed, check remote URL"
 
-# Optional: send POST
+# Optional: send POST request
 if [ ! -z "$EVAL_URL" ]; then
   COMMIT_SHA=$(git rev-parse HEAD)
   curl -X POST "$EVAL_URL" \
