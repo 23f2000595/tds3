@@ -17,7 +17,6 @@ async def api_endpoint(request: Request):
 
     if round_number == 2:
         # This is where the "Revise" logic will go.
-        # For now, we'll just print a message to the server console.
         print("✅ Received a Round 2 (Revise) request.")
         return {"message": "Round 2 request acknowledged."}
     else:

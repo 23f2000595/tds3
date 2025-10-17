@@ -1,4 +1,4 @@
-Here's a simple single-file HTML page that fulfills your project brief for a web app that tracks a user's daily streak. The page includes basic HTML, CSS for styling, and JavaScript to handle the streak increment functionality.
+Sure! Below is a simple, single-file HTML page that meets your project brief for a web app that tracks a user's daily streak. The page includes basic CSS for styling and JavaScript to handle the functionality of incrementing the streak count.
 
 ```html
 <!DOCTYPE html>
@@ -11,67 +11,66 @@ Here's a simple single-file HTML page that fulfills your project brief for a web
         body {
             font-family: Arial, sans-serif;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             height: 100vh;
-            background-color: #f4f4f4;
+            background-color: #f5f5f5;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         h1 {
             color: #333;
         }
-        #streakCount {
+        .streak-count {
             font-size: 2em;
             margin: 20px 0;
+            color: #4CAF50;
         }
         button {
             padding: 10px 20px;
-            font-size: 1.2em;
+            font-size: 16px;
             color: white;
-            background-color: #007BFF;
+            background-color: #4CAF50;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
 
-    <h1>Daily Streak Tracker</h1>
-    <div id="streakCount">Current Streak: 0</div>
-    <button id="incrementBtn">Increment Streak</button>
+    <div class="container">
+        <h1>Daily Streak Tracker</h1>
+        <div class="streak-count" id="streakCount">Current Streak: 0</div>
+        <button id="incrementButton">Increment Streak</button>
+    </div>
 
     <script>
-        let streak = 0; // Initialize the streak counter
+        let streak = 0;
 
-        // Function to increment the streak
-        function incrementStreak() {
-            streak++; // Increment the streak by 1
-            document.getElementById('streakCount').innerText = `Current Streak: ${streak}`; // Update the display
-        }
-
-        // Attach event listener to the button
-        document.getElementById('incrementBtn').addEventListener('click', incrementStreak);
+        document.getElementById('incrementButton').addEventListener('click', function() {
+            streak++;
+            document.getElementById('streakCount').textContent = 'Current Streak: ' + streak;
+        });
     </script>
-
+    
 </body>
 </html>
 ```
 
 ### Explanation:
-1. **HTML Structure**:
-   - The document has a header (`h1`) for the title and a `div` to display the current streak count.
-   - A button is provided, which when clicked will increment the streak count.
+- **HTML Structure**: The document is structured with a header, a count display, and a button. The ID attributes are used for targeting elements in JavaScript.
+- **CSS Styles**: The page is styled to be centered with a simple aesthetic—rounded corners, shadows, and colors to make the button visually appealing.
+- **JavaScript Functionality**: The script initializes a `streak` variable to `0`, and when the button is clicked, it increments the streak count and updates the displayed text accordingly.
 
-2. **CSS Styling**:
-   - Simple CSS is used to center the content and style the button and the text.
-
-3. **JavaScript Functionality**:
-   - A JavaScript variable `streak` keeps track of the current streak count.
-   - The `incrementStreak` function increments this count and updates the display.
-   - An event listener is attached to the button to trigger the `incrementStreak` function on click. 
-
-You can copy this code into an HTML file and open it in a web browser to see the functionality in action!
+You can simply copy this code into a `.html` file and open it in a web browser to test the functionality.
