@@ -69,7 +69,7 @@ EOP
 echo "Sending POST to evaluation URL..."
 curl -X POST "$EVAL_URL" \
   -H "Content-Type: application/json" \
-  -d "$JSON_PAYOAD"
+  -d "$JSON_PAYLOAD"
 
 echo ""
 echo "Script finished successfully."

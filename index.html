@@ -1,4 +1,4 @@
-Here's a simple HTML page that fulfills your project brief for a web app that tracks a user's daily streak. The page includes embedded CSS for styling and JavaScript for functionality. You can simply copy and paste this code into a `.html` file and open it in your browser.
+Certainly! Below is a simple single-file HTML page that meets the requirements of the project brief. This page includes inline CSS for styling and JavaScript to handle the streak increment functionality.
 
 ```html
 <!DOCTYPE html>
@@ -10,87 +10,73 @@ Here's a simple HTML page that fulfills your project brief for a web app that tr
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            background-color: #f0f0f0;
             margin: 0;
         }
-
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
         h1 {
             color: #333;
         }
-
-        #streak-count {
-            font-size: 2em;
+        .streak-count {
+            font-size: 24px;
             color: #4CAF50;
+            margin: 20px 0;
         }
-
         button {
             padding: 10px 20px;
-            font-size: 1em;
-            background-color: #008CBA;
-            color: white;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007BFF;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
-
         button:hover {
-            background-color: #005f6b;
-        }
-
-        #reset-button {
-            background-color: #f44336;
-        }
-
-        #reset-button:hover {
-            background-color: #c62828;
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <h1>Daily Streak Tracker</h1>
-    <div id="streak-count">Current Streak: 0</div>
-    <button id="increment-btn">Increment Streak</button>
-    <button id="reset-button">Reset Streak</button>
+    <div class="container">
+        <h1>Daily Streak Tracker</h1>
+        <div class="streak-count" id="streakCount">Current Streak: 0</div>
+        <button id="incrementButton">Increment Streak</button>
+    </div>
 
     <script>
-        let streakCount = 0;
+        let streak = 0;
 
-        const incrementButton = document.getElementById('increment-btn');
-        const resetButton = document.getElementById('reset-button');
-        const streakDisplay = document.getElementById('streak-count');
+        const streakCountElement = document.getElementById('streakCount');
+        const incrementButton = document.getElementById('incrementButton');
 
-        incrementButton.addEventListener('click', () => {
-            streakCount++;
-            updateDisplay();
+        incrementButton.addEventListener('click', function() {
+            streak++;
+            streakCountElement.textContent = 'Current Streak: ' + streak;
         });
-
-        resetButton.addEventListener('click', () => {
-            streakCount = 0;
-            updateDisplay();
-        });
-
-        function updateDisplay() {
-            streakDisplay.innerText = `Current Streak: ${streakCount}`;
-        }
     </script>
 </body>
 </html>
 ```
 
-### Explanation:
-1. **HTML Structure**: The page features a simple structure with a heading, a display area for the current streak, and two buttons—one to increment the streak and another to reset it.
-   
-2. **CSS Styles**: The styles are embedded within a `<style>` tag to make the app visually appealing. It includes styles for the body, heading, buttons, and special hover effects.
+### Description:
+1. **HTML Structure**:
+   - The page includes a title, a button for incrementing the streak, and a display area for the current streak count.
 
-3. **JavaScript Functionality**: 
-   - It initializes a `streakCount` variable to keep track of the streak.
-   - Event listeners are added to the buttons to handle click events:
-     - The "Increment Streak" button increases the count and updates the display.
-     - The "Reset Streak" button resets the count to zero and updates the display.
+2. **CSS Styling**:
+   - Simple styles are applied for a clean layout and responsive design, including a flexbox for centering the content, along with button styling.
 
-You can extend this further by adding features like local storage to persist the streak even after the page is reloaded, but this simple version will get you started!
+3. **JavaScript Functionality**:
+   - A variable `streak` keeps track of the current streak count.
+   - An event listener on the button increments the streak count whenever the button is clicked and updates the displayed count accordingly.
+
+You can save this code to an `.html` file and open it in a web browser to see the web app in action!
