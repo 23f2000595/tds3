@@ -1,4 +1,4 @@
-Sure! Below is the modified HTML page that includes a reset button to set the streak counter back to 0. The reset button is added, and its functionality is implemented in the JavaScript to reset the streak count when clicked.
+Here's a simple HTML page that fulfills your project brief for a web app that tracks a user's daily streak. The page includes embedded CSS for styling and JavaScript for functionality. You can simply copy and paste this code into a `.html` file and open it in your browser.
 
 ```html
 <!DOCTYPE html>
@@ -10,75 +10,87 @@ Sure! Below is the modified HTML page that includes a reset button to set the st
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f5f5f5;
             margin: 0;
         }
-        .container {
-            text-align: center;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+
         h1 {
             color: #333;
         }
-        .streak-count {
+
+        #streak-count {
             font-size: 2em;
-            margin: 20px 0;
             color: #4CAF50;
         }
+
         button {
             padding: 10px 20px;
-            font-size: 16px;
+            font-size: 1em;
+            background-color: #008CBA;
             color: white;
-            background-color: #4CAF50;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
-            margin: 5px; /* Add some margin between buttons */
         }
+
         button:hover {
-            background-color: #45a049;
+            background-color: #005f6b;
+        }
+
+        #reset-button {
+            background-color: #f44336;
+        }
+
+        #reset-button:hover {
+            background-color: #c62828;
         }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <h1>Daily Streak Tracker</h1>
-        <div class="streak-count" id="streakCount">Current Streak: 0</div>
-        <button id="incrementButton">Increment Streak</button>
-        <button id="resetButton">Reset Streak</button> <!-- Reset button added -->
-    </div>
+    <h1>Daily Streak Tracker</h1>
+    <div id="streak-count">Current Streak: 0</div>
+    <button id="increment-btn">Increment Streak</button>
+    <button id="reset-button">Reset Streak</button>
 
     <script>
-        let streak = 0;
+        let streakCount = 0;
 
-        // Increment streak function
-        document.getElementById('incrementButton').addEventListener('click', function() {
-            streak++;
-            document.getElementById('streakCount').textContent = 'Current Streak: ' + streak;
+        const incrementButton = document.getElementById('increment-btn');
+        const resetButton = document.getElementById('reset-button');
+        const streakDisplay = document.getElementById('streak-count');
+
+        incrementButton.addEventListener('click', () => {
+            streakCount++;
+            updateDisplay();
         });
 
-        // Reset streak function
-        document.getElementById('resetButton').addEventListener('click', function() {
-            streak = 0;
-            document.getElementById('streakCount').textContent = 'Current Streak: ' + streak;
+        resetButton.addEventListener('click', () => {
+            streakCount = 0;
+            updateDisplay();
         });
+
+        function updateDisplay() {
+            streakDisplay.innerText = `Current Streak: ${streakCount}`;
+        }
     </script>
-    
 </body>
 </html>
 ```
 
-### Changes Made:
-- **Added a Reset Button**: A new button with the ID `resetButton` has been added below the increment button.
-- **Reset Functionality**: An event listener is added for the reset button, which sets the `streak` variable back to `0` and updates the displayed text.
+### Explanation:
+1. **HTML Structure**: The page features a simple structure with a heading, a display area for the current streak, and two buttons—one to increment the streak and another to reset it.
+   
+2. **CSS Styles**: The styles are embedded within a `<style>` tag to make the app visually appealing. It includes styles for the body, heading, buttons, and special hover effects.
 
-Now you can increment the streak or reset it to zero with this updated code. Just copy the code into a `.html` file and open it in a web browser to see the changes.
+3. **JavaScript Functionality**: 
+   - It initializes a `streakCount` variable to keep track of the streak.
+   - Event listeners are added to the buttons to handle click events:
+     - The "Increment Streak" button increases the count and updates the display.
+     - The "Reset Streak" button resets the count to zero and updates the display.
+
+You can extend this further by adding features like local storage to persist the streak even after the page is reloaded, but this simple version will get you started!
