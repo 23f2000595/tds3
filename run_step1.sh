@@ -5,41 +5,47 @@ set -e
 export GITHUB_USER="23f2000595"
 export MY_SECRET_KEY="supersecret123"
 export EVAL_URL="http://127.0.0.1:8000/api-endpoint"
-
 TASK="streak_project"
-BRIEF="My minimal test app"
-EXPECTED_SECRET="$MY_SECRET_KEY"
-SECRET="$MY_SECRET_KEY"
 
-# --- Secret check ---
-if [ "$SECRET" != "$EXPECTED_SECRET" ]; then
-  echo "Secret mismatch! Exiting."
-  exit 1
-fi
-
-# --- Use current directory ---
-APP_DIR=$(pwd)
-echo "<!DOCTYPE html><html><head><title>$TASK</title></head><body><h1>$BRIEF</h1></body></html>" > "$APP_DIR/index.html"
-
-# --- Stage changes ---
+# --- Git operations ---
+echo "Committing and pushing changes..."
+cd ~/streak_project || exit
+# Create a change to ensure there's something to commit
+echo "Auto-update: $(date)" >> commit_log.txt
 git add .
+git commit -m "auto: update $(date)" || echo "No new changes to commit."
+git push origin main
 
-# --- Commit if there are changes ---
-if ! git diff-index --quiet HEAD --; then
-    git commit -m "auto update $(date)"
-fi
+# --- Gather info for evaluation POST ---
+echo "Gathering repository details..."
+REPO_URL_WITH_TOKEN=$(git remote get-url origin)
+# Remove the token from the URL for the payload
+REPO_URL=$(echo "$REPO_URL_WITH_TOKEN" | sed "s/ghp_[^@]*@//")
+COMMIT_SHA=$(git rev-parse HEAD)
+# Note: The project name on GitHub Pages is 'tds3'
+PAGES_URL="https://$GITHUB_USER.github.io/tds3/"
 
-# --- Pull remote changes safely ---
-git pull origin main --rebase || echo "Remote already up-to-date"
+# --- Build the JSON payload ---
+echo "Building JSON payload..."
+JSON_PAYLOAD=$(cat <<EOP
+{
+  "email": "${GITHUB_USER}@example.com",
+  "task": "$TASK",
+  "round": 1,
+  "nonce": "nonce-$(date +%s)",
+  "repo_url": "$REPO_URL",
+  "commit_sha": "$COMMIT_SHA",
+  "pages_url": "$PAGES_URL",
+  "secret": "$MY_SECRET_KEY"
+}
+EOP
+)
 
-# --- Push local commits ---
-git push origin main || echo "Push failed, check remote URL"
+# --- Send POST request with the correct format ---
+echo "Sending POST to evaluation URL..."
+curl -X POST "$EVAL_URL" \
+  -H "Content-Type: application/json" \
+  -d "$JSON_PAYLOAD"
 
-# --- Optional: send POST request with secret ---
-if [ ! -z "$EVAL_URL" ]; then
-  COMMIT_SHA=$(git rev-parse HEAD)
-  curl -X POST "$EVAL_URL" \
-    -H "Content-Type: application/json" \
-    -d "{\"task\": \"$TASK\", \"brief\": \"$BRIEF\", \"commit\": \"$COMMIT_SHA\", \"secret\": \"$MY_SECRET_KEY\"}" \
-    || echo "POST failed"
-fi
+echo ""
+echo "Script finished."
