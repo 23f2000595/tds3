@@ -1,4 +1,4 @@
-Sure! Below is a simple, single-file HTML page that meets your project brief for a web app that tracks a user's daily streak. The page includes basic CSS for styling and JavaScript to handle the functionality of incrementing the streak count.
+Sure! Below is the modified HTML page that includes a reset button to set the streak counter back to 0. The reset button is added, and its functionality is implemented in the JavaScript to reset the streak count when clicked.
 
 ```html
 <!DOCTYPE html>
@@ -41,6 +41,7 @@ Sure! Below is a simple, single-file HTML page that meets your project brief for
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
+            margin: 5px; /* Add some margin between buttons */
         }
         button:hover {
             background-color: #45a049;
@@ -53,13 +54,21 @@ Sure! Below is a simple, single-file HTML page that meets your project brief for
         <h1>Daily Streak Tracker</h1>
         <div class="streak-count" id="streakCount">Current Streak: 0</div>
         <button id="incrementButton">Increment Streak</button>
+        <button id="resetButton">Reset Streak</button> <!-- Reset button added -->
     </div>
 
     <script>
         let streak = 0;
 
+        // Increment streak function
         document.getElementById('incrementButton').addEventListener('click', function() {
             streak++;
+            document.getElementById('streakCount').textContent = 'Current Streak: ' + streak;
+        });
+
+        // Reset streak function
+        document.getElementById('resetButton').addEventListener('click', function() {
+            streak = 0;
             document.getElementById('streakCount').textContent = 'Current Streak: ' + streak;
         });
     </script>
@@ -68,9 +77,8 @@ Sure! Below is a simple, single-file HTML page that meets your project brief for
 </html>
 ```
 
-### Explanation:
-- **HTML Structure**: The document is structured with a header, a count display, and a button. The ID attributes are used for targeting elements in JavaScript.
-- **CSS Styles**: The page is styled to be centered with a simple aesthetic—rounded corners, shadows, and colors to make the button visually appealing.
-- **JavaScript Functionality**: The script initializes a `streak` variable to `0`, and when the button is clicked, it increments the streak count and updates the displayed text accordingly.
+### Changes Made:
+- **Added a Reset Button**: A new button with the ID `resetButton` has been added below the increment button.
+- **Reset Functionality**: An event listener is added for the reset button, which sets the `streak` variable back to `0` and updates the displayed text.
 
-You can simply copy this code into a `.html` file and open it in a web browser to test the functionality.
+Now you can increment the streak or reset it to zero with this updated code. Just copy the code into a `.html` file and open it in a web browser to see the changes.
