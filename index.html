@@ -1,4 +1,4 @@
-Sure! Below is a simple HTML file that meets your project brief. The file includes HTML, CSS for basic styling, and JavaScript to handle the streak counting functionality. You can copy this code into a file with a `.html` extension (e.g., `streak_tracker.html`) and open it in a web browser to see it in action.
+Sure! Here’s the modified HTML code that includes a reset button to set the streak back to 0. You can copy this updated code into your existing `streak_tracker.html` file or save it as a new file.
 
 ```html
 <!DOCTYPE html>
@@ -35,6 +35,7 @@ Sure! Below is a simple HTML file that meets your project brief. The file includ
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
+            margin: 5px;
         }
         button:hover {
             background-color: #45a049;
@@ -46,15 +47,22 @@ Sure! Below is a simple HTML file that meets your project brief. The file includ
     <h1>Daily Streak Tracker</h1>
     <div id="streak">Current Streak: 0</div>
     <button id="incrementBtn">Increment Streak</button>
+    <button id="resetBtn">Reset Streak</button>
 
     <script>
         let streakCount = 0;
 
         const streakDisplay = document.getElementById('streak');
         const incrementBtn = document.getElementById('incrementBtn');
+        const resetBtn = document.getElementById('resetBtn');
 
         incrementBtn.addEventListener('click', () => {
             streakCount++;
+            streakDisplay.textContent = `Current Streak: ${streakCount}`;
+        });
+
+        resetBtn.addEventListener('click', () => {
+            streakCount = 0;
             streakDisplay.textContent = `Current Streak: ${streakCount}`;
         });
     </script>
@@ -63,9 +71,11 @@ Sure! Below is a simple HTML file that meets your project brief. The file includ
 </html>
 ```
 
-### How to Use:
-1. Copy the above code into a new file named `streak_tracker.html`.
-2. Open the file in any web browser.
-3. Click the "Increment Streak" button to increase your streak count. The updated count will be displayed below the button.
+### Changes Made:
+1. **Reset Button**: A new button with the id `resetBtn` has been added for resetting the streak.
+2. **Reset Functionality**: An event listener for the reset button has been added, which sets `streakCount` back to 0 and updates the display accordingly.
 
-This implementation is simple and does not persist the streak count after the page is refreshed. You could enhance it further by adding local storage functionality to store the streak count across sessions if needed.
+### How to Use:
+1. Copy the updated code into your `streak_tracker.html` file.
+2. Open the file in any web browser.
+3. You can now click "Increment Streak" to increase your streak count and click "Reset Streak" to set the streak back to 0. The updated count will be displayed below the buttons.
