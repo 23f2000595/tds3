@@ -2,10 +2,11 @@
 set -e
 
 # --- Environment ---
-export GITHUB_USER="23f2000595"
-export MY_SECRET_KEY="supersecret123"
-export EVAL_URL="http://127.0.0.1:8000/api-endpoint"
+GITHUB_USER="23f2000595"
+MY_SECRET_KEY="supersecret123"
+EVAL_URL="http://127.0.0.1:8000/api-endpoint"
 TASK="streak_project"
+BRIEF="A simple web app that tracks a user's daily streak."
 
 # --- Go to project directory ---
 cd ~/streak_project || exit
@@ -14,19 +15,15 @@ cd ~/streak_project || exit
 echo "Creating LICENSE file..."
 cat > LICENSE << 'LICENSE_EOF'
 MIT License
-
 Copyright (c) 2025 23f2000595
-
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
-
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
-
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -36,10 +33,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 LICENSE_EOF
 
+# --- LLM Code Generation ---
+echo "Generating app code with LLM..."
+llm "Generate a simple, single-file HTML page with CSS and JavaScript for the project brief: '$BRIEF'. The page should have a title, a button to increment the streak, and a display for the current streak count." > index.html
+
 # --- Git operations ---
 echo "Committing and pushing changes..."
 git add .
-git commit -m "auto: add LICENSE and update" -m "Run at $(date)" || echo "No new changes to commit."
+git commit -m "feat: generate app via LLM and add LICENSE" -m "Run at $(date)" || echo "No new changes to commit."
 git push origin main
 
 # --- Gather info for evaluation POST ---
@@ -71,4 +72,4 @@ curl -X POST "$EVAL_URL" \
   -d "$JSON_PAYLOAD"
 
 echo ""
-echo "Script finished."
+echo "Script finished successfully."

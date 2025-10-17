@@ -1,74 +1,75 @@
-Here's a simple HTML file that meets your requirements for a web app that tracks a user's daily streak. You can copy and paste this code into an HTML file and open it in a web browser to see it in action.
+Here's a simple HTML page that meets your project brief for a web app that tracks a user's daily streak. The page includes CSS for basic styling and JavaScript to handle the streak increment logic.
 
 ```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Streak Tracker</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
+            background-color: #f0f0f0;
             margin: 0;
         }
-
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
         h1 {
-            color: #333;
+            margin-bottom: 20px;
         }
-
-        #streakCount {
-            font-size: 2em;
-            margin: 20px 0;
-        }
-
         button {
-            padding: 10px 15px;
-            font-size: 1em;
-            color: #fff;
-            background-color: #007BFF;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
             border: none;
             border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
+            background-color: #4CAF50;
+            color: white;
+            transition: background-color 0.3s ease;
         }
-
         button:hover {
-            background-color: #0056b3;
+            background-color: #45a049;
+        }
+        .streak-count {
+            font-size: 24px;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
+
+<div class="container">
     <h1>Daily Streak Tracker</h1>
-    <div id="streakCount">Current Streak: 0</div>
     <button id="incrementButton">Increment Streak</button>
+    <div class="streak-count">Current Streak: <span id="streak">0</span></div>
+</div>
 
-    <script>
-        let streak = 0;
+<script>
+    let streakCount = 0;
 
-        const streakCountElement = document.getElementById('streakCount');
-        const incrementButton = document.getElementById('incrementButton');
+    document.getElementById('incrementButton').addEventListener('click', function() {
+        streakCount++;
+        document.getElementById('streak').textContent = streakCount;
+    });
+</script>
 
-        incrementButton.addEventListener('click', () => {
-            streak++;
-            streakCountElement.innerText = `Current Streak: ${streak}`;
-        });
-    </script>
 </body>
 </html>
 ```
 
 ### Explanation:
+1. **HTML Structure**: The HTML consists of a title, a button to increment the streak, and a display area for the current streak count.
+2. **CSS Styles**: Basic styles are included for layout, text, button hover effects, and container styling to enhance user experience.
+3. **JavaScript Logic**: A simple JavaScript function increments the streak count when the button is clicked and updates the displayed count on the page.
 
-- **HTML Structure**: The page has a title, a display area for the current streak count, and a button to increment the streak.
-- **CSS**: Basic styling is applied for a clean and user-friendly interface.
-- **JavaScript**: A script is included that initializes the streak count to zero. When the button is clicked, the streak is incremented, and the current streak count is updated in the display area.
-
-You can expand on this basic setup by adding local storage for persistent streak tracking, user authentication, or even a reset function if needed in the future.
+You can save this code as an `.html` file, open it in your web browser, and click the button to track your daily streak!
