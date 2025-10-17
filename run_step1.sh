@@ -7,22 +7,45 @@ export MY_SECRET_KEY="supersecret123"
 export EVAL_URL="http://127.0.0.1:8000/api-endpoint"
 TASK="streak_project"
 
+# --- Go to project directory ---
+cd ~/streak_project || exit
+
+# --- Create the LICENSE file ---
+echo "Creating LICENSE file..."
+cat > LICENSE << 'LICENSE_EOF'
+MIT License
+
+Copyright (c) 2025 23f2000595
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+LICENSE_EOF
+
 # --- Git operations ---
 echo "Committing and pushing changes..."
-cd ~/streak_project || exit
-# Create a change to ensure there's something to commit
-echo "Auto-update: $(date)" >> commit_log.txt
 git add .
-git commit -m "auto: update $(date)" || echo "No new changes to commit."
+git commit -m "auto: add LICENSE and update" -m "Run at $(date)" || echo "No new changes to commit."
 git push origin main
 
 # --- Gather info for evaluation POST ---
 echo "Gathering repository details..."
-REPO_URL_WITH_TOKEN=$(git remote get-url origin)
-# Remove the token from the URL for the payload
-REPO_URL=$(echo "$REPO_URL_WITH_TOKEN" | sed "s/ghp_[^@]*@//")
+REPO_URL="https://github.com/$GITHUB_USER/tds3"
 COMMIT_SHA=$(git rev-parse HEAD)
-# Note: The project name on GitHub Pages is 'tds3'
 PAGES_URL="https://$GITHUB_USER.github.io/tds3/"
 
 # --- Build the JSON payload ---
@@ -41,7 +64,7 @@ JSON_PAYLOAD=$(cat <<EOP
 EOP
 )
 
-# --- Send POST request with the correct format ---
+# --- Send POST request ---
 echo "Sending POST to evaluation URL..."
 curl -X POST "$EVAL_URL" \
   -H "Content-Type: application/json" \
