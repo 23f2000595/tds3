@@ -1,4 +1,4 @@
-Sure! Here’s the modified HTML code that includes a reset button to set the streak back to 0. You can copy this updated code into your existing `streak_tracker.html` file or save it as a new file.
+Here’s a simple HTML page that meets your project brief for a web app that tracks a user's daily streak. It includes CSS for basic styling and JavaScript to handle the functionality of incrementing and displaying the streak count.
 
 ```html
 <!DOCTYPE html>
@@ -10,7 +10,7 @@ Sure! Here’s the modified HTML code that includes a reset button to set the st
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #f0f0f0;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -21,49 +21,40 @@ Sure! Here’s the modified HTML code that includes a reset button to set the st
         h1 {
             color: #333;
         }
-        #streak {
-            font-size: 2rem;
+        #streakCount {
+            font-size: 2em;
             margin: 20px 0;
             color: #4CAF50;
         }
         button {
             padding: 10px 20px;
-            font-size: 1rem;
-            background-color: #4CAF50;
+            font-size: 16px;
             color: white;
+            background-color: #2196F3;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
-            margin: 5px;
         }
         button:hover {
-            background-color: #45a049;
+            background-color: #1E88E5;
         }
     </style>
 </head>
 <body>
 
     <h1>Daily Streak Tracker</h1>
-    <div id="streak">Current Streak: 0</div>
-    <button id="incrementBtn">Increment Streak</button>
-    <button id="resetBtn">Reset Streak</button>
+    <div id="streakCount">Current Streak: 0</div>
+    <button id="incrementButton">Increment Streak</button>
 
     <script>
-        let streakCount = 0;
+        let currentStreak = 0;
 
-        const streakDisplay = document.getElementById('streak');
-        const incrementBtn = document.getElementById('incrementBtn');
-        const resetBtn = document.getElementById('resetBtn');
+        const streakDisplay = document.getElementById('streakCount');
+        const incrementButton = document.getElementById('incrementButton');
 
-        incrementBtn.addEventListener('click', () => {
-            streakCount++;
-            streakDisplay.textContent = `Current Streak: ${streakCount}`;
-        });
-
-        resetBtn.addEventListener('click', () => {
-            streakCount = 0;
-            streakDisplay.textContent = `Current Streak: ${streakCount}`;
+        incrementButton.addEventListener('click', () => {
+            currentStreak++;
+            streakDisplay.innerText = `Current Streak: ${currentStreak}`;
         });
     </script>
 
@@ -71,11 +62,9 @@ Sure! Here’s the modified HTML code that includes a reset button to set the st
 </html>
 ```
 
-### Changes Made:
-1. **Reset Button**: A new button with the id `resetBtn` has been added for resetting the streak.
-2. **Reset Functionality**: An event listener for the reset button has been added, which sets `streakCount` back to 0 and updates the display accordingly.
+### Explanation:
+- **HTML Structure**: The page has a title, a display area for the current streak count, and a button to increment that count.
+- **CSS**: Basic styling makes the app visually appealing, with a centered layout and styled button.
+- **JavaScript**: A simple script maintains the current streak count and updates the display when the button is clicked.
 
-### How to Use:
-1. Copy the updated code into your `streak_tracker.html` file.
-2. Open the file in any web browser.
-3. You can now click "Increment Streak" to increase your streak count and click "Reset Streak" to set the streak back to 0. The updated count will be displayed below the buttons.
+You can copy and paste this code into a `.html` file and open it in any web browser to see the app in action!
