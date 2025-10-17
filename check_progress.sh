@@ -16,7 +16,7 @@ else
 fi
 
 # 2. LLM Code Generation Check
-if grep -q "llm" run_step1.sh; then
+if grep -q "llm " run_step1.sh; then
   echo "✅ Build: LLM-assisted code generation is IMPLEMENTED."
   COMPLETED_CHECKS=$((COMPLETED_CHECKS + 1))
 else

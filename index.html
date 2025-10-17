@@ -1,4 +1,4 @@
-Here’s a simple HTML page that meets your project brief for a web app that tracks a user's daily streak. It includes CSS for basic styling and JavaScript to handle the functionality of incrementing and displaying the streak count.
+Below is a simple, single-file HTML page that meets your project brief for a web app that tracks a user's daily streak. The page includes basic CSS for styling, JavaScript for functionality, and displays the current streak count with a button to increment it.
 
 ```html
 <!DOCTYPE html>
@@ -9,62 +9,69 @@ Here’s a simple HTML page that meets your project brief for a web app that tra
     <title>Daily Streak Tracker</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
-            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
         }
         h1 {
             color: #333;
         }
-        #streakCount {
+        #streak {
             font-size: 2em;
             margin: 20px 0;
-            color: #4CAF50;
         }
-        button {
+        #incrementButton {
             padding: 10px 20px;
-            font-size: 16px;
+            font-size: 1.2em;
             color: white;
-            background-color: #2196F3;
+            background-color: #007bff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
-        button:hover {
-            background-color: #1E88E5;
+        #incrementButton:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-
     <h1>Daily Streak Tracker</h1>
-    <div id="streakCount">Current Streak: 0</div>
+    <div id="streak">Current Streak: 0 Days</div>
     <button id="incrementButton">Increment Streak</button>
 
     <script>
-        let currentStreak = 0;
+        // Initialize streak count
+        let streakCount = 0;
 
-        const streakDisplay = document.getElementById('streakCount');
-        const incrementButton = document.getElementById('incrementButton');
+        // Function to update the display
+        function updateStreakDisplay() {
+            const streakDisplay = document.getElementById('streak');
+            streakDisplay.textContent = `Current Streak: ${streakCount} Days`;
+        }
 
-        incrementButton.addEventListener('click', () => {
-            currentStreak++;
-            streakDisplay.innerText = `Current Streak: ${currentStreak}`;
+        // Event listener for the button
+        document.getElementById('incrementButton').addEventListener('click', function() {
+            streakCount++;
+            updateStreakDisplay();
         });
     </script>
-
 </body>
 </html>
 ```
 
 ### Explanation:
-- **HTML Structure**: The page has a title, a display area for the current streak count, and a button to increment that count.
-- **CSS**: Basic styling makes the app visually appealing, with a centered layout and styled button.
-- **JavaScript**: A simple script maintains the current streak count and updates the display when the button is clicked.
 
-You can copy and paste this code into a `.html` file and open it in any web browser to see the app in action!
+1. **HTML Structure**: The page consists of a title, a div to display the current streak, and a button to increment the streak.
+
+2. **CSS Styling**: Basic styles are applied to center content and make the button visually appealing.
+
+3. **JavaScript**: 
+   - A variable `streakCount` is initialized to keep track of the current streak days.
+   - The `updateStreakDisplay` function updates the text content of the streak display.
+   - An event listener is added to the button that increments the streak count when clicked and calls the update function to reflect the new count in the UI.
+
+You can copy and paste this code into a `.html` file and open it in a web browser to see your simple daily streak tracker in action!
