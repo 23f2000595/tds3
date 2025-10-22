@@ -1,29 +1,23 @@
-from fastapi import FastAPI, Request
-import os
+from fastapi import FastAPI, Request, Response
 
 app = FastAPI()
 
 @app.post("/api-endpoint")
-async def api_endpoint(request: Request):
-    data = await request.json()
-    expected_secret = os.getenv("MY_SECRET_KEY")
+async def check_secret(request: Request):
 
-    # --- Secret Verification ---
-    if data.get("secret") != expected_secret:
-        return {"error": "unauthorized"}
+    # Read the raw body as bytes
+    body_bytes = await request.body()
 
-    # --- Round Handling Logic ---
-    round_number = data.get("round")
+    # Decode bytes into a string (and strip any whitespace)
+    received_secret = body_bytes.decode().strip()
 
-    if round_number == 2:
-        # This is where the "Revise" logic will go.
-        print("✅ Received a Round 2 (Revise) request.")
-        return {"message": "Round 2 request acknowledged."}
+    # This is the secret from your instructions
+    expected_secret = "supersecret123"
+
+    if received_secret == expected_secret:
+        # If secret is correct, return success
+        return {"status": "success", "message": "Secret is correct!"}
     else:
-        # This is the original "Build" logic for Round 1.
-        print("✅ Received a Round 1 (Build) request.")
-        return {
-            "message": "Access granted",
-            "task_received": data.get("task"),
-            "brief_received": data.get("brief")
-        }
+        # If secret is wrong, return an error
+        # Use a 401 status code for "Unauthorized"
+        return Response(content='{"error":"unauthorized"}', status_code=401)
